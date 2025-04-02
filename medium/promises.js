@@ -60,17 +60,28 @@ function readTheFile(resolve, filePath){
 //In one function 
 function cleanFile(filePath){
     return new Promise(
-        (done) => {
+        (resolve, reject) => { //it gives us 2 arguments resolve & reject
             fs.readFile(filePath, 'utf-8', function(err, data){
-                data = data.trim();
-                fs.writeFile(filePath, data, function(){
-                    console.log(data);
-                    done();
+                if(err){
+                    reject("file not found");
+                }
+                else{
+                    data = data.trim();
+                    fs.writeFile(filePath, data, function(){
+                        console.log(data);
+                        resolve();
                 });
+                }
             });
         }
     );
 }
 
-cleanFile("medium/a.txt").then(onDone);
+cleanFile("medium/a.txt")
+    .then(function(){
+        console.log('File is cleaned');
+    })
+    .catch(function(e){
+        console.log(e);
+    });
 
