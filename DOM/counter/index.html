@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Counter</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div id="parent"></div>
+  <script>
+    let state = {
+      count: 0,
+      color: 'red',
+      isRed: true
+    }
+
+    function OnButtonPress() {
+      state.count++;
+      if (state.isRed) {
+        state.color = 'blue'
+        // state.isRed = false;
+      }
+      else {
+        state.color = 'red'
+        // state.isRed = true;
+      }
+      state.isRed = !state.isRed;
+      console.log(state.isRed)
+      render();
+    }
+
+    function render() {
+      document.getElementById('parent').innerHTML = "";
+      const button = buttonComponent();
+      document.getElementById('parent').appendChild(button);
+    }
+    function buttonComponent() {
+      const button = document.createElement('button');
+      button.innerHTML = `Counter ${state.count}`;
+      button.setAttribute('onClick', 'OnButtonPress()');
+      button.setAttribute('style', `color: ${state.color}`);
+      return button;
+    }
+    console.log(buttonComponent())
+    render();
+  </script>
+
+</body>
+
+</html>
